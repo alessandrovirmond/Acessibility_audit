@@ -4,7 +4,7 @@ import 'package:accessibility_audit/library/pluto_grid/src/model/pluto_column_ty
 import 'package:accessibility_audit/library/pluto_grid/src/model/pluto_row.dart';
 import 'package:accessibility_audit/library/pluto_grid/src/pluto_grid_events.dart';
 import 'package:accessibility_audit/report/controller/enum/enum_report.dart';
-import 'package:accessibility_audit/report/model/dominio_report.dart';
+import 'package:accessibility_audit/report/model/dominio_model.dart';
 import 'package:accessibility_audit/report/repository/dominio_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -27,11 +27,9 @@ class DominioController {
   Future<List<PlutoRow>> getRows({Map<String, dynamic>? qsparam}) async {
     isGraphActive.value = false;
 
-    final List<DominioModel> response = await _repository.get(qsparam: {
-      ...?qsparam,
-    });
+    final List<DominioModel> response = await _repository.get();
 
-    return response.map((r) => r.toRows()).toList();
+    return response.map((r) => r.toRow()).toList();
   }
 
   List<PlutoColumn> getCollumnsReport() {
