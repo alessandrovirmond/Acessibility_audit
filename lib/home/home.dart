@@ -1,3 +1,4 @@
+import 'package:accessibility_audit/report/page/report_page.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -9,10 +10,28 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     homeContext = context;
 
-    return  Scaffold(
+    return Scaffold(
       body: Column(
         children: [
-          Expanded(child: Row(children: [Container(child: Text("Auditoria de Acessibilidade de Portais Municipais"),)],),)
+          Expanded(
+            flex: 1,
+            child: Row(
+              children: [
+                Container(
+                  child:
+                      Text("Auditoria de Acessibilidade de Portais Municipais"),
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 6,
+            child: Container(
+              color: Colors.blue,
+              child: ReportPage(),
+             
+            ),
+          )
         ],
       ),
     );

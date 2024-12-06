@@ -1,0 +1,221 @@
+{
+    "data": [
+     {
+        "dominio": "novafriburgo.rj.gov.br",
+        "total_violacoes": 788,
+        "media_violacoes_por_pagina": 9.49,
+        "media_elementos_afetados_por_pagina": 94.36,
+        "nota_dominio": 7.33,
+        "total_paginas": 83,
+        "notas_paginas": [
+            {
+                "nome_pagina": "https://www.novafriburgo.rj.gov.br/secretariaView/?id=3",
+                "nota": 6.36,
+                "violacoes": 9,
+                "elementos_afetados": 112
+            },
+            {
+                "nome_pagina": "https://www.novafriburgo.rj.gov.br/paginas-centralizadas/9_Controladoria-Geral.html",
+                "nota": 7.13,
+                "violacoes": 12,
+                "elementos_afetados": 107
+            },
+
+            {
+                "nome_pagina": "https://www.novafriburgo.rj.gov.br/pagina/139_Agricultura-e-Desenvolvimento-Rural.html",
+                "nota": 8.41,
+                "violacoes": 9,
+                "elementos_afetados": 81
+            },
+            {
+                "nome_pagina": "https://www.novafriburgo.rj.gov.br/turismo/4-amparo-4-distrito",
+                "nota": 8.24,
+                "violacoes": 10,
+                "elementos_afetados": 84
+            },
+       
+            {
+                "nome_pagina": "http://www.novafriburgo.rj.gov.br/licitacao/",
+                "nota": 1.44,
+                "violacoes": 11,
+                "elementos_afetados": 220
+            },
+            {
+                "nome_pagina": "https://www.novafriburgo.rj.gov.br/secretariaView/?id=22",
+                "nota": 6.38,
+                "violacoes": 9,
+                "elementos_afetados": 110
+            },
+            {
+                "nome_pagina": "http://novafriburgo.rj.gov.br/gabinete/",
+                "nota": 8.26,
+                "violacoes": 10,
+                "elementos_afetados": 84
+            },
+            {
+                "nome_pagina": "https://www.novafriburgo.rj.gov.br/turismo/cadastro-para-acesso-de-grupos-ao-pico-da-caledonia",
+                "nota": 8.24,
+                "violacoes": 10,
+                "elementos_afetados": 84
+            },
+            {
+                "nome_pagina": "https://novafriburgo.rj.gov.br:2096/",
+                "nota": 9.54,
+                "violacoes": 8,
+                "elementos_afetados": 10
+            },
+            {
+                "nome_pagina": "https://intranet.novafriburgo.rj.gov.br/",
+                "nota": 9.79,
+                "violacoes": 5,
+                "elementos_afetados": 5
+            },
+            {
+                "nome_pagina": "https://www.novafriburgo.rj.gov.br/galeria-fotos",
+                "nota": 8.25,
+                "violacoes": 9,
+                "elementos_afetados": 83
+            },
+            {
+                "nome_pagina": "https://desenvolve.novafriburgo.rj.gov.br/",
+                "nota": 8.27,
+                "violacoes": 7,
+                "elementos_afetados": 45
+            },
+            {
+                "nome_pagina": "https://www.novafriburgo.rj.gov.br/licitacaoView/?id=1434",
+                "nota": 8.39,
+                "violacoes": 9,
+                "elementos_afetados": 81
+            },
+            {
+                "nome_pagina": "https://www.novafriburgo.rj.gov.br/licitacao/",
+                "nota": 1.44,
+                "violacoes": 11,
+                "elementos_afetados": 220
+            },
+            {
+                "nome_pagina": "https://www.novafriburgo.rj.gov.br/secretariaView/?id=35",
+                "nota": 6.38,
+                "violacoes": 9,
+                "elementos_afetados": 110
+            },
+            {
+                "nome_pagina": "https://www.novafriburgo.rj.gov.br/secretariaView/?id=13",
+                "nota": 6.38,
+                "violacoes": 9,
+                "elementos_afetados": 110
+            },
+            {
+                "nome_pagina": "https://www.novafriburgo.rj.gov.br/secretariaView/?id=29",
+                "nota": 6.38,
+                "violacoes": 9,
+                "elementos_afetados": 110
+            },
+            {
+                "nome_pagina": "https://www.novafriburgo.rj.gov.br/licitacaoView/?id=1440",
+                "nota": 8.39,
+                "violacoes": 9,
+                "elementos_afetados": 81
+            }
+        ]
+
+    },
+    {
+        "dominio" : "cordeiro.rj.gov.br",
+        "total_violacoes": 445,
+        "media_violacoes_por_pagina": 8.24,
+        "media_elementos_afetados_por_pagina": 24.24,
+        "nota_dominio": 9.0,
+        "total_paginas": 54,
+        "notas_paginas": [
+            {
+                "nome_pagina": "https://cordeiro.rj.gov.br/category/expo-cordeiro/",
+                "nota": 9.28,
+                "violacoes": 7,
+                "elementos_afetados": 16
+            },
+            {
+                "nome_pagina": "https://cordeiro.rj.gov.br/prefeito-e-vice-prefeito",
+                "nota": 9.28,
+                "violacoes": 6,
+                "elementos_afetados": 16
+            },
+            {
+                "nome_pagina": "https://transparencia.cordeiro.rj.gov.br/licitacao.php",
+                "nota": 8.98,
+                "violacoes": 11,
+                "elementos_afetados": 30
+            },
+           
+            {
+                "nome_pagina": "https://transparencia.cordeiro.rj.gov.br/unidadecultura.php",
+                "nota": 9.58,
+                "violacoes": 8,
+                "elementos_afetados": 16
+            },
+            {
+                "nome_pagina": "https://www.transparencia.cordeiro.rj.gov.br/licitacaolista.php?id=1038",
+                "nota": 8.4,
+                "violacoes": 12,
+                "elementos_afetados": 38
+            },
+            {
+                "nome_pagina": "https://www.transparencia.cordeiro.rj.gov.br/licitacaolista.php?id=1040",
+                "nota": 8.16,
+                "violacoes": 12,
+                "elementos_afetados": 44
+            },
+            {
+                "nome_pagina": "https://cordeiro.rj.gov.br/servicos",
+                "nota": 9.28,
+                "violacoes": 7,
+                "elementos_afetados": 16
+            },
+            {
+                "nome_pagina": "https://cordeiro.rj.gov.br/noticias",
+                "nota": 9.28,
+                "violacoes": 7,
+                "elementos_afetados": 16
+            },
+            {
+                "nome_pagina": "https://transparencia.cordeiro.rj.gov.br/jornal.php",
+                "nota": 9.29,
+                "violacoes": 10,
+                "elementos_afetados": 21
+            },
+            {
+                "nome_pagina": "https://cordeiro.rj.gov.br/wp-content/uploads/2023/04/Parque-de-Exposicoes.jpg",
+                "nota": 9.79,
+                "violacoes": 5,
+                "elementos_afetados": 5
+            },
+            {
+                "nome_pagina": "https://cordeiro.rj.gov.br/wp-content/uploads/2023/04/Coreto-da-Praca.jpg",
+                "nota": 9.79,
+                "violacoes": 5,
+                "elementos_afetados": 5
+            },
+            {
+                "nome_pagina": "https://transparencia.cordeiro.rj.gov.br/lrf.php",
+                "nota": 6.6,
+                "violacoes": 12,
+                "elementos_afetados": 90
+            },
+            {
+                "nome_pagina": "https://mail.cordeiro.rj.gov.br/",
+                "nota": 9.42,
+                "violacoes": 9,
+                "elementos_afetados": 12
+            },
+            {
+                "nome_pagina": "https://cordeiro.rj.gov.br/legislacao/",
+                "nota": 8.98,
+                "violacoes": 6,
+                "elementos_afetados": 22
+            }
+        ]
+       
+    }
+    ]
+}

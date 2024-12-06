@@ -1,4 +1,4 @@
-import 'package:accessibility_audit/report/controller/days_report_contoller.dart';
+import 'package:accessibility_audit/report/controller/dominio_contoller.dart';
 import 'package:accessibility_audit/report/controller/enum/enum_report.dart';
 import 'package:accessibility_audit/uitls/global_styles/pallete_color.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,7 @@ class ButtonReport extends StatefulWidget {
   final VoidCallback onTap;
   final String label;
   final EnumReport enumReport;
-  final DaysReportController controller;
+  final DominioController controller;
 
   const ButtonReport({
     Key? key,
