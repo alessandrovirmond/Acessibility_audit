@@ -1,16 +1,18 @@
 import 'package:accessibility_audit/library/pluto_grid/src/model/pluto_cell.dart';
 import 'package:accessibility_audit/library/pluto_grid/src/model/pluto_row.dart';
 
-class DominioModel {
+class DomainModel {
   final String dominio;
+  final String municipio;
   final int totalViolacoes;
   final double mediaViolacoesPorPagina;
   final double mediaElementosAfetadosPorPagina;
   final double notaDominio;
   final int totalPaginas;
 
-  DominioModel({
+  DomainModel({
     required this.dominio,
+    required this.municipio,
     required this.totalViolacoes,
     required this.mediaViolacoesPorPagina,
     required this.mediaElementosAfetadosPorPagina,
@@ -19,9 +21,10 @@ class DominioModel {
   });
 
   // Método para criar o modelo a partir do JSON
-  factory DominioModel.fromJson(Map<String, dynamic> json) {
-    return DominioModel(
+  factory DomainModel.fromJson(Map<String, dynamic> json) {
+    return DomainModel(
       dominio: json['dominio'],
+      municipio: json['municipio'],
       totalViolacoes: json['total_violacoes'],
       mediaViolacoesPorPagina: json['media_violacoes_por_pagina'].toDouble(),
       mediaElementosAfetadosPorPagina: json['media_elementos_afetados_por_pagina'].toDouble(),
@@ -34,7 +37,10 @@ class DominioModel {
   PlutoRow toRow() {
     return PlutoRow(
       cells: {
+        'H': PlutoCell(value: dominio),
+        'E': PlutoCell(value: dominio),
         'Domínio': PlutoCell(value: dominio),
+        'Município': PlutoCell(value: municipio),
         'Total de Violações': PlutoCell(value: totalViolacoes),
         'Média de Violações por Página': PlutoCell(value: mediaViolacoesPorPagina.toStringAsFixed(2)),
         'Média de Elementos Afetados por Página': PlutoCell(value: mediaElementosAfetadosPorPagina.toStringAsFixed(2)),

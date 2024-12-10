@@ -1,4 +1,4 @@
-import 'package:accessibility_audit/report/controller/dominio_contoller.dart';
+import 'package:accessibility_audit/report/controller/domain_contoller.dart';
 import 'package:accessibility_audit/report/controller/enum/enum_report.dart';
 import 'package:accessibility_audit/uitls/global_styles/pallete_color.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,7 @@ class ButtonReport extends StatefulWidget {
   final VoidCallback onTap;
   final String label;
   final EnumReport enumReport;
-  final DominioController controller;
+  final DomainController controller;
 
   const ButtonReport({
     Key? key,
@@ -29,19 +29,20 @@ class _ButtonReportState extends State<ButtonReport> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: MouseRegion(
+        cursor: SystemMouseCursors.click,
         onEnter: (_) => setState(() => _isHovered = true),
         onExit: (_) => setState(() => _isHovered = false),
         child: GestureDetector(
           onTap: () {
             widget.controller.setReportRange(widget.enumReport);
-            widget.onTap(); // Chama o onTap do ReportPage para recarregar a tabela
+            widget.onTap(); 
           },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: widget.controller.enumReport == widget.enumReport ? Colors.black : _isHovered ? Colors.grey : PalleteColor.yellow,
+              color: Colors.white,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.black),
+              border: Border.all(color: Colors.white,width: 3),
             ),
             child: Center(
               child: Text(
@@ -49,7 +50,7 @@ class _ButtonReportState extends State<ButtonReport> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: widget.controller.enumReport == widget.enumReport ? Colors.white : Colors.black,
+                  color:  Colors.black,
                 ),
               ),
             ),

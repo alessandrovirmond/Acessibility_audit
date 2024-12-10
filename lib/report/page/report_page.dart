@@ -1,7 +1,7 @@
 import 'package:accessibility_audit/report/controller/enum/enum_report.dart';
 import 'package:accessibility_audit/report/page/components/button_report.dart';
 import 'package:flutter/material.dart';
-import 'package:accessibility_audit/report/controller/dominio_contoller.dart';
+import 'package:accessibility_audit/report/controller/domain_contoller.dart';
 import 'package:accessibility_audit/report/page/pluto_grid_page.dart';
 import 'package:accessibility_audit/uitls/global_styles/pallete_color.dart';
 
@@ -13,7 +13,7 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
-  DominioController controller = DominioController();
+  DomainController controller = DomainController();
 
   void _reloadReport() {
     setState(() {});
@@ -24,12 +24,12 @@ class _ReportPageState extends State<ReportPage> {
     final double hg = MediaQuery.of(context).size.height;
     final double wd = MediaQuery.of(context).size.width;
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -37,11 +37,10 @@ class _ReportPageState extends State<ReportPage> {
                   children: [
                     ButtonReport(
                       controller: controller,
-                      enumReport: EnumReport.umMes,
+                      enumReport: EnumReport.domain,
                       onTap: _reloadReport,
-                      label: "1 Mês",
+                      label: "RJ",
                     ),
-                   
                   ],
                 ),
                 ValueListenableBuilder<bool>(
@@ -51,13 +50,12 @@ class _ReportPageState extends State<ReportPage> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Container(
-                            
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: Colors.black),
+                              border: Border.all(color: PalleteColor.blue),
                               color: isPressed
-                                  ? Colors.black
-                                  : PalleteColor.yellow,
+                                  ? Colors.grey.shade400
+                                  : Colors.white,
                             ),
                             child: IconButton(
                               onPressed: () {
@@ -66,12 +64,18 @@ class _ReportPageState extends State<ReportPage> {
                               },
                               icon: Row(
                                 children: [
-                                  Text("Gerar Gráfico", style: TextStyle(fontWeight: FontWeight.bold, color:  isPressed ? Colors.white : Colors.black),),
-                                  SizedBox(width: 10,),
+                                  Text(
+                                    "Gerar Gráfico",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
                                   Icon(
                                     Icons.pie_chart,
-                                    color:
-                                        isPressed ? Colors.white : Colors.black,
+                                    color: Colors.black,
                                   ),
                                 ],
                               ),
@@ -83,22 +87,22 @@ class _ReportPageState extends State<ReportPage> {
               ],
             ),
           ),
-          SizedBox(
-            height: hg * 0.70,
-            width: wd * 0.75,
-            child: PlutoGridExamplePage(
-              collumn: controller.getCollumnsReport(),
-              futureRow: controller.getRows(
-                  qsparam: {"start": controller.enumReport.millisecondsSince}),
-              title: "Dias",
-              
-              isButtonPressed: controller.isButtonPressed,
-              isGraphActive: controller.isGraphActive,
-              stateManager: controller.stateManager,
-            ),
+        ),
+        SizedBox(
+          
+          height: hg * 0.72,
+          width: wd * 0.95,
+          child: PlutoGridExamplePage(
+            collumn: controller.getCollumnsReport(),
+            futureRow: controller.getRows(
+                qsparam: {"start": controller.enumReport.millisecondsSince}),
+            title: "Dias",
+            isButtonPressed: controller.isButtonPressed,
+            isGraphActive: controller.isGraphActive,
+            stateManager: controller.stateManager,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

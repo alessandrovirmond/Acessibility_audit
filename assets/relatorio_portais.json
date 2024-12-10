@@ -1,6 +1,7 @@
 {
     "data": [
      {
+        "municipio": "Nova Friburgo",
         "dominio": "novafriburgo.rj.gov.br",
         "total_violacoes": 788,
         "media_violacoes_por_pagina": 9.49,
@@ -122,6 +123,7 @@
 
     },
     {
+        "municipio": "Cordeiro",
         "dominio" : "cordeiro.rj.gov.br",
         "total_violacoes": 445,
         "media_violacoes_por_pagina": 8.24,

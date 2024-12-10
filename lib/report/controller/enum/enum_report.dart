@@ -1,4 +1,4 @@
-enum EnumReport { umMes, tresMeses, seisMeses, umAno }
+enum EnumReport { domain, page, violation, elements }
 
 extension EnumReportExtension on EnumReport {
   /// Retorna o timestamp em milissegundos para a data ajustada às 00h de acordo com o intervalo do EnumReport.
@@ -7,16 +7,16 @@ extension EnumReportExtension on EnumReport {
     DateTime calculatedDate;
 
     switch (this) {
-      case EnumReport.umMes:
+      case EnumReport.domain:
         calculatedDate = DateTime(now.year, now.month - 1, now.day);
         break;
-      case EnumReport.tresMeses:
+      case EnumReport.page:
         calculatedDate = DateTime(now.year, now.month - 3, now.day);
         break;
-      case EnumReport.seisMeses:
+      case EnumReport.violation:
         calculatedDate = DateTime(now.year, now.month - 6, now.day);
         break;
-      case EnumReport.umAno:
+      case EnumReport.elements:
         calculatedDate = DateTime(now.year - 1, now.month, now.day);
         break;
     }

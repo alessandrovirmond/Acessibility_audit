@@ -1,3 +1,4 @@
+import 'package:accessibility_audit/uitls/global_styles/pallete_color.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -215,7 +216,7 @@ class PlutoGridStyleConfig {
     this.menuBackgroundColor = Colors.white,
     this.gridBorderColor = const Color(0xFFA1A5AE),
     this.borderColor = const Color(0xFFDDE2EB),
-    this.activatedBorderColor = Colors.lightBlue,
+    this.activatedBorderColor = PalleteColor.blue,
     this.inactivatedBorderColor = const Color(0xFFC4C7CC),
     this.iconSize = 18,
     this.rowHeight = PlutoGridSettings.rowHeight,
