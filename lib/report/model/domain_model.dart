@@ -22,6 +22,9 @@ class DomainModel {
 
   // Método para criar o modelo a partir do JSON
   factory DomainModel.fromJson(Map<String, dynamic> json) {
+
+
+
     return DomainModel(
       dominio: json['dominio'],
       municipio: json['municipio'],
@@ -37,14 +40,14 @@ class DomainModel {
   PlutoRow toRow() {
     return PlutoRow(
       cells: {
-        'H': PlutoCell(value: dominio),
-        'E': PlutoCell(value: dominio),
+        'H': PlutoCell(value: municipio),
+        'E': PlutoCell(value: municipio),
         'Domínio': PlutoCell(value: dominio),
         'Município': PlutoCell(value: municipio),
         'Total de Violações': PlutoCell(value: totalViolacoes),
         'Média de Violações por Página': PlutoCell(value: mediaViolacoesPorPagina.toStringAsFixed(2)),
         'Média de Elementos Afetados por Página': PlutoCell(value: mediaElementosAfetadosPorPagina.toStringAsFixed(2)),
-        'Nota do Domínio': PlutoCell(value: notaDominio.toStringAsFixed(2)),
+        'Nota do Domínio': PlutoCell(value: notaDominio),
         'Total de Páginas': PlutoCell(value: totalPaginas),
       },
     );

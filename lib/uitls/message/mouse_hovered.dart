@@ -39,7 +39,7 @@ class _OnHoveredState extends State<OnHovered> {
     );
     
     final BoxDecoration styleHoverB = BoxDecoration(
-      color: isHovered ? PalleteColor.yellow : color,
+      color: isHovered ? PalleteColor.red : color,
       border: Border.all(
         color: isHovered ? colorHovered[2] : color,
         width: 3.0,

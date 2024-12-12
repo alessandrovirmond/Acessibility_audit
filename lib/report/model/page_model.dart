@@ -16,6 +16,7 @@ class PageModel {
 
   factory PageModel.fromJson(Map<String, dynamic> json) {
     return PageModel(
+      
       nomePagina: json['nome_pagina'],
       nota: (json['nota'] as num?)?.toDouble(),
       violacoes: json['violacoes'],
@@ -26,7 +27,9 @@ class PageModel {
   PlutoRow toRow() {
     return PlutoRow(
       cells: {
-        'Nome da Página': PlutoCell(value: nomePagina),
+        'H': PlutoCell(value: nomePagina),
+        'E': PlutoCell(value: nomePagina),
+        'Página': PlutoCell(value: nomePagina),
         'Nota': PlutoCell(value: nota?.toStringAsFixed(2)),
         'Violações': PlutoCell(value: violacoes),
         'Elementos Afetados': PlutoCell(value: elementosAfetados),

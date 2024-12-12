@@ -9,6 +9,7 @@ import 'package:accessibility_audit/library/pluto_grid/src/model/pluto_row.dart'
 import 'package:accessibility_audit/library/pluto_grid/src/pluto_grid.dart';
 import 'package:accessibility_audit/library/pluto_grid/src/pluto_grid_configuration.dart';
 import 'package:accessibility_audit/library/pluto_grid/src/pluto_grid_events.dart';
+import 'package:accessibility_audit/report/controller/i_report_controller.dart';
 import 'package:accessibility_audit/uitls/do_print/do_print.dart';
 import 'package:accessibility_audit/uitls/graphs/dashboard/components/controller/generator_dashboard.dart';
 import 'package:accessibility_audit/uitls/graphs/dashboard/controller/my_output_manager/pluto_grid_manager_stream.dart';
@@ -28,8 +29,7 @@ class PlutoGridExamplePage extends StatefulWidget {
   final Stream<int>? percent;
   final String? title;
   final Widget? info;
-  final ValueNotifier<int?> isButtonPressed;
-  final ValueNotifier<bool> isGraphActive;
+  IReportController controller;
   PlutoGridStateManager? stateManager;
 
   static bool updateWindows = false;
@@ -41,9 +41,9 @@ class PlutoGridExamplePage extends StatefulWidget {
     this.percent,
     this.title,
     this.info,
-    required this.isButtonPressed,
+    required this.controller,
     this.stateManager,
-    required this.isGraphActive,
+  
   });
 
   @override
@@ -116,7 +116,7 @@ class _PlutoGridExamplePageState extends State<PlutoGridExamplePage> {
                     enableCellBorderVertical: false,
                     columnTextStyle: const TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold),
-                    rowCheckedColor: PalleteColor.yellow,
+                    rowCheckedColor: PalleteColor.red,
                   ),
                   localeText: const PlutoGridLocaleText(
                     unfreezeColumn: "Descongelar",
@@ -144,7 +144,7 @@ class _PlutoGridExamplePageState extends State<PlutoGridExamplePage> {
             },
           ),
           ValueListenableBuilder<int?>(
-            valueListenable: widget.isButtonPressed,
+            valueListenable: widget.controller.isButtonPressed,
             builder: (context, millisecond, child) {
               return millisecond != null
                   ? Positioned(
@@ -155,7 +155,7 @@ class _PlutoGridExamplePageState extends State<PlutoGridExamplePage> {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             border: Border.all(
-                                color: PalleteColor.yellow, width: 2),
+                                color: PalleteColor.red, width: 2),
                             borderRadius: BorderRadius.circular(10)),
                         child: Column(
                           children: [
@@ -186,8 +186,10 @@ class _PlutoGridExamplePageState extends State<PlutoGridExamplePage> {
             },
           ),
           ValueListenableBuilder<bool>(
-            valueListenable: widget.isGraphActive,
+            valueListenable: widget.controller.isGraphActive,
             builder: (context, isPressed, child) {
+
+             
               return isPressed
                   ? Center(
                       child: generate.addApp(

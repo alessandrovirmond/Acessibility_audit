@@ -47,12 +47,12 @@ class MyStyles {
   );
 
 
-  static final BoxDecoration cardYellow = BoxDecoration(
-    color: PalleteColor.yellow,
+  static final BoxDecoration cardred = BoxDecoration(
+    color: PalleteColor.red,
     borderRadius: BorderRadius.circular(16.0),
     boxShadow: const <BoxShadow>[
       BoxShadow(
-          color: PalleteColor.yellow,
+          color: PalleteColor.red,
           offset: Offset(1.0, 0.5),
           blurRadius: 6.0),
     ],

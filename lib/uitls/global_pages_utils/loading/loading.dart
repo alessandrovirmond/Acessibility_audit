@@ -18,7 +18,7 @@ class _LoadingState extends State<Loading> {
 
     return Center(
       child: LoadingAnimationWidget.staggeredDotsWave(
-        color: PalleteColor.yellow, size: widget.scale,
+        color: PalleteColor.red, size: widget.scale,
       ),
     );
   }

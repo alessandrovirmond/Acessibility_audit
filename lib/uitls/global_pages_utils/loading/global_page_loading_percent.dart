@@ -20,7 +20,7 @@ class GlobalPageLoadingPercent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 LoadingAnimationWidget.staggeredDotsWave(
-                  color: PalleteColor.yellow,
+                  color: PalleteColor.red,
                   size: 40,
                 ),
               ],
@@ -39,7 +39,7 @@ class GlobalPageLoadingPercent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               LoadingAnimationWidget.staggeredDotsWave(
-                color: PalleteColor.yellow,
+                color: PalleteColor.red,
                 size: 60,
               ),
             ],

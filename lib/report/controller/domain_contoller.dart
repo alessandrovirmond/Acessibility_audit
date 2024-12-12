@@ -1,30 +1,31 @@
+import 'package:accessibility_audit/config.dart';
 import 'package:accessibility_audit/library/pluto_grid/src/manager/pluto_grid_state_manager.dart';
 import 'package:accessibility_audit/library/pluto_grid/src/model/pluto_column.dart';
 import 'package:accessibility_audit/library/pluto_grid/src/model/pluto_column_type.dart';
 import 'package:accessibility_audit/library/pluto_grid/src/model/pluto_row.dart';
+import 'package:accessibility_audit/library/pluto_grid/src/plugin/pluto_aggregate_column_footer.dart';
 import 'package:accessibility_audit/library/pluto_grid/src/pluto_grid_events.dart';
 import 'package:accessibility_audit/report/controller/enum/enum_report.dart';
+import 'package:accessibility_audit/report/controller/i_report_controller.dart';
 import 'package:accessibility_audit/report/model/domain_model.dart';
 import 'package:accessibility_audit/report/repository/domain_repository.dart';
+import 'package:accessibility_audit/uitls/global_styles/pallete_color.dart';
 import 'package:flutter/material.dart';
 
-class DomainController {
+class DomainController implements IReportController {
   final DomainRepository _repository = DomainRepository();
-  EnumReport enumReport = EnumReport.domain;
   int selected = -1;
   PlutoGridStateManager? stateManager;
 
   // ValueNotifier para o evento do grafico ser gerado
+  @override
   final ValueNotifier<bool> isGraphActive = ValueNotifier<bool>(false);
 
   // ValueNotifier para o evento do botão
+  @override
   final ValueNotifier<int?> isButtonPressed = ValueNotifier<int?>(null);
 
-  void setReportRange(EnumReport report) {
-    enumReport = report;
-  }
-
-  Future<List<PlutoRow>> getRows({Map<String, dynamic>? qsparam}) async {
+  Future<List<PlutoRow>> getRows({required String id}) async {
     isGraphActive.value = false;
 
     final List<DomainModel> response = await _repository.get();
@@ -32,7 +33,9 @@ class DomainController {
     return response.map((r) => r.toRow()).toList();
   }
 
-  List<PlutoColumn> getCollumnsReport() {
+  List<PlutoColumn> getCollumnsReport(
+      {required void setReport(
+          {required EnumReport enumReport, required String id})}) {
     return [
       PlutoColumn(
         title: "",
@@ -46,85 +49,245 @@ class DomainController {
         enableAutoEditing: false,
         enableEditingMode: false,
         type: PlutoColumnType.text(),
-        renderer: (value) {
+        renderer: (rendererContext) {
           return IconButton(
             onPressed: () {
-              // Verifica se o botão da linha já está pressionado
-              bool isAlreadySelected =
-                  value.stateManager.checkedRows.contains(value.row);
+              final String newId = rendererContext.cell.value;
 
-              if (isAlreadySelected) {
-                // Despressiona o botão, definindo isButtonPressed como null
-                isButtonPressed.value = null;
-                selected = -1;
-              } else {
-                // Redefine todos os estados para falso
-                for (var element in value.stateManager.checkedRows) {
-                  value.stateManager.setRowChecked(element, false);
-                }
+              setReport(id: newId, enumReport: EnumReport.page);
 
-                // Define o valor da linha pressionada em isButtonPressed
-                selected = value.cell.value;
-                isButtonPressed.value = value.cell.value;
-              }
-
-              // Define o estado de seleção para a linha atual
-              value.stateManager.setRowChecked(
-                value.row,
-                selected == value.cell.value,
-              );
-              value.stateManager.notifyListeners();
-              value.stateManager.onRowChecked!(
-                PlutoGridOnRowCheckedOneEvent(
-                  row: value.row,
-                  rowIdx: value.rowIdx,
-                  isChecked: selected == value.cell.value,
-                ),
-              );
+              // Recarrega o ReportPage chamando o setState
+              rendererContext.stateManager.notifyListeners();
             },
-            icon: Icon( Icons.list,
+            icon: Icon(
+              Icons.list,
+              color: PalleteColor.blue,
             ),
           );
         },
       ),
-     
       PlutoColumn(
-          title: "Município",
-          field: "Município",
-          type: PlutoColumnType.text(),
-          width: 180),
+        title: "Município",
+        field: "Município",
+        type: PlutoColumnType.text(),
+        width: 180,
+        footerRenderer: (context) => PlutoAggregateColumnFooter(
+          rendererContext: context,
+          formatAsCurrency: false,
+          type: PlutoAggregateColumnType.count,
+          alignment: Alignment.center,
+          titleSpanBuilder: (text) {
+            return [
+              const TextSpan(
+                text: 'QNT:  ',
+                style: TextStyle(color: Colors.red),
+              ),
+              TextSpan(text: text.replaceAll('\$', "").replaceAll(",", ".")),
+            ];
+          },
+        ),
+      ),
       PlutoColumn(
           title: "Domínio",
           field: "Domínio",
           type: PlutoColumnType.text(),
           width: 180),
-          PlutoColumn(
+      PlutoColumn(
           title: "Nota do Domínio",
           field: "Nota do Domínio",
-          type: PlutoColumnType.number(locale: "pt_Br"),
+          type: PlutoColumnType.number(locale: "pt_Br", format: "#,##0.00"),
           width: 180),
       PlutoColumn(
           title: 'Total de Violações',
           field: 'Total de Violações',
           type: PlutoColumnType.number(locale: "pt_Br"),
-          width: 180),
+          width: 180,
+          footerRenderer: (context) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              PlutoAggregateColumnFooter(
+                rendererContext: context,
+                formatAsCurrency: false,
+                type: PlutoAggregateColumnType.sum,
+                alignment: Alignment.center,
+                titleSpanBuilder: (text) {
+                  return [
+                    const TextSpan(
+                      text: 'Total: ',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    TextSpan(
+                        text:
+                           text),
+                  ];
+                },
+              ),
+              PlutoAggregateColumnFooter(
+                rendererContext: context,
+                formatAsCurrency: false,
+                type: PlutoAggregateColumnType.average,
+                alignment: Alignment.center,
+                titleSpanBuilder: (text) {
+                  return [
+                    const TextSpan(
+                      text: 'Média: ',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    TextSpan(
+                        text:
+                           text),
+                  ];
+                },
+              ),
+            ],
+          );
+        },
+          ),
       PlutoColumn(
           title: 'Média de Violações por Página',
           field: 'Média de Violações por Página',
           type: PlutoColumnType.number(locale: "pt_Br"),
-          width: 180),
+          width: 180,
+          footerRenderer: (context) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              PlutoAggregateColumnFooter(
+                rendererContext: context,
+                formatAsCurrency: false,
+                type: PlutoAggregateColumnType.sum,
+                alignment: Alignment.center,
+                titleSpanBuilder: (text) {
+                  return [
+                    const TextSpan(
+                      text: 'Total: ',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    TextSpan(
+                        text:
+                           text),
+                  ];
+                },
+              ),
+              PlutoAggregateColumnFooter(
+                rendererContext: context,
+                formatAsCurrency: false,
+                type: PlutoAggregateColumnType.average,
+                alignment: Alignment.center,
+                titleSpanBuilder: (text) {
+                  return [
+                    const TextSpan(
+                      text: 'Média: ',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    TextSpan(
+                        text:
+                           text),
+                  ];
+                },
+              ),
+            ],
+          );
+        },
+        ),
       PlutoColumn(
-          title:  'Média de Elementos Afetados por Página',
-          field:  'Média de Elementos Afetados por Página',
+          title: 'Média de Elementos Afetados por Página',
+          field: 'Média de Elementos Afetados por Página',
           type: PlutoColumnType.number(locale: "pt_Br"),
-          width: 180),
-      
+          width: 180,
+          footerRenderer: (context) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              PlutoAggregateColumnFooter(
+                rendererContext: context,
+                formatAsCurrency: false,
+                type: PlutoAggregateColumnType.sum,
+                alignment: Alignment.center,
+                titleSpanBuilder: (text) {
+                  return [
+                    const TextSpan(
+                      text: 'Total: ',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    TextSpan(
+                        text:
+                           text),
+                  ];
+                },
+              ),
+              PlutoAggregateColumnFooter(
+                rendererContext: context,
+                formatAsCurrency: false,
+                type: PlutoAggregateColumnType.average,
+                alignment: Alignment.center,
+                titleSpanBuilder: (text) {
+                  return [
+                    const TextSpan(
+                      text: 'Média: ',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    TextSpan(
+                        text:
+                           text),
+                  ];
+                },
+              ),
+            ],
+          );
+        },),
       PlutoColumn(
           title: "Total de Páginas",
           field: "Total de Páginas",
           type: PlutoColumnType.number(locale: "pt_Br"),
-          width: 180),
-            PlutoColumn(
+          width: 180,
+          footerRenderer: (context) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              PlutoAggregateColumnFooter(
+                rendererContext: context,
+                formatAsCurrency: false,
+                type: PlutoAggregateColumnType.sum,
+                alignment: Alignment.center,
+                titleSpanBuilder: (text) {
+                  return [
+                    const TextSpan(
+                      text: 'Total: ',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    TextSpan(
+                        text:
+                           text),
+                  ];
+                },
+              ),
+              PlutoAggregateColumnFooter(
+                rendererContext: context,
+                formatAsCurrency: false,
+                type: PlutoAggregateColumnType.average,
+                alignment: Alignment.center,
+                titleSpanBuilder: (text) {
+                  return [
+                    const TextSpan(
+                      text: 'Média: ',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    TextSpan(
+                        text:
+                           text),
+                  ];
+                },
+              ),
+            ],
+          );
+        },),
+      PlutoColumn(
         title: "",
         field: "H",
         width: 60,
@@ -135,6 +298,7 @@ class DomainController {
         enableFilterMenuItem: false,
         enableAutoEditing: false,
         enableEditingMode: false,
+        frozen: PlutoColumnFrozen.end,
         type: PlutoColumnType.text(),
         renderer: (value) {
           return IconButton(

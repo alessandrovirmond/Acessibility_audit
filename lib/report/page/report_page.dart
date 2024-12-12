@@ -1,4 +1,7 @@
+import 'package:accessibility_audit/config.dart';
 import 'package:accessibility_audit/report/controller/enum/enum_report.dart';
+import 'package:accessibility_audit/report/controller/i_report_controller.dart';
+import 'package:accessibility_audit/report/page/components/button_data.dart';
 import 'package:accessibility_audit/report/page/components/button_report.dart';
 import 'package:flutter/material.dart';
 import 'package:accessibility_audit/report/controller/domain_contoller.dart';
@@ -13,10 +16,29 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
-  DomainController controller = DomainController();
+  late IReportController controller;
+
+  @override
+  initState() {
+    controller = Config.enumReport.controller;
+
+    super.initState();
+  }
 
   void _reloadReport() {
     setState(() {});
+  }
+
+  void setReport(
+      {required EnumReport enumReport, required String id, bool add = true}) {
+    Config.enumReport = enumReport;
+    Config.id = id;
+    if (add) {
+      Config.listButton.add(ButtonData(label: id, enumReport: enumReport));
+    }
+
+    controller = Config.enumReport.controller;
+    _reloadReport();
   }
 
   @override
@@ -27,78 +49,102 @@ class _ReportPageState extends State<ReportPage> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    ButtonReport(
-                      controller: controller,
-                      enumReport: EnumReport.domain,
-                      onTap: _reloadReport,
-                      label: "RJ",
-                    ),
-                  ],
-                ),
-                ValueListenableBuilder<bool>(
-                    valueListenable: controller.isGraphActive,
-                    builder: (context, isPressed, child) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: PalleteColor.blue),
-                              color: isPressed
-                                  ? Colors.grey.shade400
-                                  : Colors.white,
-                            ),
-                            child: IconButton(
-                              onPressed: () {
-                                controller.isGraphActive.value =
-                                    !controller.isGraphActive.value;
-                              },
-                              icon: Row(
-                                children: [
-                                  Text(
-                                    "Gerar Gráfico",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    Icons.pie_chart,
-                                    color: Colors.black,
-                                  ),
-                                ],
-                              ),
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: Config.listButton.asMap().entries.map((entry) {
+                  final int index = entry.key;
+                  final ButtonData buttonData = entry.value;
+                  final bool isLast = index == Config.listButton.length - 1;
+
+                  return Row(
+                    children: [
+                      if (index > 0)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: Icon(
+                            Icons.keyboard_arrow_right,
+                            size: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ButtonReport(
+                        data: buttonData,
+                        callback: () {
+                          if (isLast) {
+                            setReport(
+                              add: false,
+                              enumReport: buttonData.enumReport,
+                              id: buttonData.label,
+                            );
+                          } else {
+                            Config.listButton.removeRange(
+                                index + 1, Config.listButton.length);
+                            setReport(
+                              add: false,
+                              enumReport: buttonData.enumReport,
+                              id: buttonData.label,
+                            );
+                          }
+                        },
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+              ValueListenableBuilder<bool>(
+                  valueListenable: controller.isGraphActive,
+                  builder: (context, isPressed, child) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: PalleteColor.blue),
+                            color:
+                                isPressed ? Colors.grey.shade400 : Colors.white,
+                          ),
+                          child: IconButton(
+                            onPressed: () {
+                              controller.isGraphActive.value =
+                                  !controller.isGraphActive.value;
+                            },
+                            icon: const Row(
+                              children: [
+                                Text(
+                                  "Gerar Gráfico",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Icon(
+                                  Icons.pie_chart,
+                                  color: Colors.black,
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      );
-                    })
-              ],
-            ),
+                        ),
+                      ],
+                    );
+                  })
+            ],
           ),
         ),
         SizedBox(
-          
           height: hg * 0.72,
-          width: wd * 0.95,
+          width: wd * 0.97,
           child: PlutoGridExamplePage(
-            collumn: controller.getCollumnsReport(),
-            futureRow: controller.getRows(
-                qsparam: {"start": controller.enumReport.millisecondsSince}),
-            title: "Dias",
-            isButtonPressed: controller.isButtonPressed,
-            isGraphActive: controller.isGraphActive,
+            collumn: controller.getCollumnsReport(setReport: setReport),
+            futureRow: controller.getRows(id: Config.id),
+            title: "Relatório",
+            controller: controller,
             stateManager: controller.stateManager,
           ),
         ),

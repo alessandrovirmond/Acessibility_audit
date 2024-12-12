@@ -15,7 +15,7 @@ class GlobalPageLoading extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             LoadingAnimationWidget.staggeredDotsWave(
-              color: PalleteColor.yellow,
+              color: PalleteColor.red,
               size: 40,
             ),
           ],

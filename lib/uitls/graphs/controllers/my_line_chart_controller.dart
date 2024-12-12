@@ -242,7 +242,7 @@ class MyLineChartController{
 
   LineChartBarData get lineChartBarData1_2 => LineChartBarData(
     isCurved: true,
-    color: PalleteColor.yellow,
+    color: PalleteColor.red,
     barWidth: 3,
     isStrokeCapRound: true,
     dotData: const FlDotData(show: false),
