@@ -97,6 +97,53 @@ class DomainController implements IReportController {
           field: "Nota do Domínio",
           type: PlutoColumnType.number(locale: "pt_Br", format: "#,##0.00"),
           width: 180),
+           PlutoColumn(
+          title: "Total de Páginas",
+          field: "Total de Páginas",
+          type: PlutoColumnType.number(locale: "pt_Br"),
+          width: 180,
+          footerRenderer: (context) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              PlutoAggregateColumnFooter(
+                rendererContext: context,
+                formatAsCurrency: false,
+                type: PlutoAggregateColumnType.sum,
+                alignment: Alignment.center,
+                titleSpanBuilder: (text) {
+                  return [
+                    const TextSpan(
+                      text: 'Total: ',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    TextSpan(
+                        text:
+                           text),
+                  ];
+                },
+              ),
+              PlutoAggregateColumnFooter(
+                rendererContext: context,
+                formatAsCurrency: false,
+                type: PlutoAggregateColumnType.average,
+                alignment: Alignment.center,
+                titleSpanBuilder: (text) {
+                  return [
+                    const TextSpan(
+                      text: 'Média: ',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    TextSpan(
+                        text:
+                           text),
+                  ];
+                },
+              ),
+            ],
+          );
+        },),
       PlutoColumn(
           title: 'Total de Violações',
           field: 'Total de Violações',
@@ -240,53 +287,7 @@ class DomainController implements IReportController {
             ],
           );
         },),
-      PlutoColumn(
-          title: "Total de Páginas",
-          field: "Total de Páginas",
-          type: PlutoColumnType.number(locale: "pt_Br"),
-          width: 180,
-          footerRenderer: (context) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              PlutoAggregateColumnFooter(
-                rendererContext: context,
-                formatAsCurrency: false,
-                type: PlutoAggregateColumnType.sum,
-                alignment: Alignment.center,
-                titleSpanBuilder: (text) {
-                  return [
-                    const TextSpan(
-                      text: 'Total: ',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    TextSpan(
-                        text:
-                           text),
-                  ];
-                },
-              ),
-              PlutoAggregateColumnFooter(
-                rendererContext: context,
-                formatAsCurrency: false,
-                type: PlutoAggregateColumnType.average,
-                alignment: Alignment.center,
-                titleSpanBuilder: (text) {
-                  return [
-                    const TextSpan(
-                      text: 'Média: ',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    TextSpan(
-                        text:
-                           text),
-                  ];
-                },
-              ),
-            ],
-          );
-        },),
+     
       PlutoColumn(
         title: "",
         field: "H",

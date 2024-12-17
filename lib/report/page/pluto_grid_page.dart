@@ -84,6 +84,7 @@ class _PlutoGridExamplePageState extends State<PlutoGridExamplePage> {
                 rows: snap.data!,
                 onRowChecked: (row) {},
                 onLoaded: (PlutoGridOnLoadedEvent event) {
+                  widget.controller.stateManager = event.stateManager;
                   widget.stateManager = event.stateManager;
                   widget.stateManager!.setShowColumnFilter(true);
                 },
@@ -101,7 +102,7 @@ class _PlutoGridExamplePageState extends State<PlutoGridExamplePage> {
                   ),
                   shortcut: PlutoGridShortcut(actions: MyPlutoOptions.shortcut),
                   style: const PlutoGridStyleConfig(
-                   
+                    
                     gridBackgroundColor: PalleteColor.scaffold,
                     rowColor: PalleteColor.scaffold,
                     evenRowColor: PalleteColor.scaffold,

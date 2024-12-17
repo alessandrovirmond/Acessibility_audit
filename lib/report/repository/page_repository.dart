@@ -12,8 +12,6 @@ class PageRepository {
   // Método para carregar dados do JSON local
   Future<List<PageModel>> get() async {
 
-    print(" -- PAGE REPO");
-
     try {
       final String response = await rootBundle.loadString(localPath);
       final Map<String, dynamic> data = json.decode(response);

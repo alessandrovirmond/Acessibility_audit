@@ -45,9 +45,16 @@ class PageController implements IReportController {
         enableEditingMode: false,
        
         type: PlutoColumnType.text(),
-        renderer: (value) {
+        renderer: (rendererContext) {
           return IconButton(
-            onPressed: () {},
+            onPressed: () {
+               final String newId = rendererContext.cell.value;
+
+              setReport(id: newId, enumReport: EnumReport.violation);
+
+              // Recarrega o ReportPage chamando o setState
+              rendererContext.stateManager.notifyListeners();
+            },
             icon: const Icon(Icons.list,
             color: PalleteColor.blue,
             ),
