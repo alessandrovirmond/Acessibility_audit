@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:accessibility_audit/config.dart';
+import 'package:accessibility_audit/library/pluto_grid_export/src/pluto_grid_plus_export.dart';
 import 'package:accessibility_audit/report/controller/enum/enum_report.dart';
 import 'package:accessibility_audit/report/controller/i_report_controller.dart';
 import 'package:accessibility_audit/report/page/components/button_data.dart';
+import 'package:accessibility_audit/report/page/components/button_export.dart';
 import 'package:accessibility_audit/report/page/components/button_report.dart';
 import 'package:accessibility_audit/report/page/components/button_top_menu.dart';
 import 'package:accessibility_audit/report/page/components/button_top_menu_model.dart';
+import 'package:accessibility_audit/report/page/components/export_services/export_pluto_grid.dart';
+import 'package:accessibility_audit/services/file_save/save_file.dart';
 import 'package:flutter/material.dart';
 import 'package:accessibility_audit/report/controller/domain_contoller.dart';
 import 'package:accessibility_audit/report/page/pluto_grid_page.dart';
@@ -99,22 +105,27 @@ class _ReportPageState extends State<ReportPage> {
               Row(
                 children: [
                   ButtonTopMenu(
-                    tile: ButtonTopMenuModel(
-                  title: "Colunas",
-                  icon: Icons.view_column,
-                  onTap: () {
-                    controller.stateManager!.showSetColumnsPopup(context);
-                  },
-                )),SizedBox(width: 10,),
-                    ButtonTopMenu(
-                    tile: ButtonTopMenuModel(
-                  title: "Filtros",
-                  icon: Icons.filter_list_alt,
-                  onTap: () {
-                    controller.stateManager!.showFilterPopup(context);
-                  },
-                )),
-                SizedBox(width: 10,),
+                      tile: ButtonTopMenuModel(
+                    title: "Colunas",
+                    icon: Icons.view_column,
+                    onTap: () {
+                      controller.stateManager!.showSetColumnsPopup(context);
+                    },
+                  )),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  ButtonTopMenu(
+                      tile: ButtonTopMenuModel(
+                    title: "Filtros",
+                    icon: Icons.filter_list_alt,
+                    onTap: () {
+                      controller.stateManager!.showFilterPopup(context);
+                    },
+                  )),
+                  SizedBox(
+                    width: 10,
+                  ),
                   ValueListenableBuilder<bool>(
                       valueListenable: controller.isGraphActive,
                       builder: (context, isPressed, child) {
@@ -125,8 +136,9 @@ class _ReportPageState extends State<ReportPage> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(16),
                                 border: Border.all(color: PalleteColor.blue),
-                                color:
-                                    isPressed ? Colors.grey.shade400 : Colors.white,
+                                color: isPressed
+                                    ? Colors.grey.shade400
+                                    : Colors.white,
                               ),
                               child: IconButton(
                                 onPressed: () {
@@ -136,12 +148,10 @@ class _ReportPageState extends State<ReportPage> {
                                 icon: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                   
                                     Icon(
                                       Icons.pie_chart,
                                       color: Colors.black,
                                     ),
-                                    
                                   ],
                                 ),
                               ),
@@ -149,8 +159,25 @@ class _ReportPageState extends State<ReportPage> {
                           ],
                         );
                       }),
+                       SizedBox(
+                    width: 10,
+                  ),
+                  ExportButton(
+                    exportCsv: () {
+                      var exported = const Utf8Encoder().convert(
+                          PlutoGridExport.exportCSV(controller.stateManager!));
+                      FileSaveHelper.saveAndLaunchFile(
+                          exported, "${DateTime.now()}.csv");
+                    },
+                    exportPdf: () {
+                      ExportPlutoGrid.asPdf(controller.stateManager!);
+                    },
+                    exportExcel: () {
+                      ExportPlutoGrid.asExcel(controller.stateManager!);
+                    },
+                  ),
                 ],
-              )
+              ),
             ],
           ),
         ),

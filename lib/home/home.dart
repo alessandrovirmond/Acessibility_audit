@@ -22,7 +22,7 @@ class Home extends StatelessWidget {
               children: [
                 Container(
                   child: Text(
-                    "Auditoria de Acessibilidade de Portais Municipais",
+                  "Observatório de Acessibilidade de Portais Municipais",
                     style: MyStyles.titleGrid,
                   ),
                 )

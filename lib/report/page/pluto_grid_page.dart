@@ -107,12 +107,10 @@ class _PlutoGridExamplePageState extends State<PlutoGridExamplePage> {
                     evenRowColor: PalleteColor.scaffold,
                     rowColor: PalleteColor.scaffold,
                     activatedColor: Colors.transparent, 
-                    
                     filterHeaderColor: PalleteColor.scaffold,
                     filterHeaderIconColor: PalleteColor.scaffold,
-                    
-                     enableGridBorderShadow: false,
-                   gridBorderColor: PalleteColor.scaffold,
+                    enableGridBorderShadow: false,
+                    gridBorderColor: PalleteColor.scaffold,
 
                     columnTextStyle: const TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold),
