@@ -98,6 +98,14 @@ class _ReportPageState extends State<ReportPage> {
               ),
               Row(
                 children: [
+                  ButtonTopMenu(
+                    tile: ButtonTopMenuModel(
+                  title: "Colunas",
+                  icon: Icons.view_column,
+                  onTap: () {
+                    controller.stateManager!.showSetColumnsPopup(context);
+                  },
+                )),SizedBox(width: 10,),
                     ButtonTopMenu(
                     tile: ButtonTopMenuModel(
                   title: "Filtros",
@@ -106,7 +114,7 @@ class _ReportPageState extends State<ReportPage> {
                     controller.stateManager!.showFilterPopup(context);
                   },
                 )),
-                SizedBox(width: 20,),
+                SizedBox(width: 10,),
                   ValueListenableBuilder<bool>(
                       valueListenable: controller.isGraphActive,
                       builder: (context, isPressed, child) {

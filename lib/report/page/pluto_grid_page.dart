@@ -102,19 +102,18 @@ class _PlutoGridExamplePageState extends State<PlutoGridExamplePage> {
                   ),
                   shortcut: PlutoGridShortcut(actions: MyPlutoOptions.shortcut),
                   style: const PlutoGridStyleConfig(
-                    
                     gridBackgroundColor: PalleteColor.scaffold,
-                    rowColor: PalleteColor.scaffold,
-                    evenRowColor: PalleteColor.scaffold,
-                    cellActiveColor: PalleteColor.scaffold,
                     oddRowColor: PalleteColor.scaffold,
-                    enableGridBorderShadow: false,
+                    evenRowColor: PalleteColor.scaffold,
+                    rowColor: PalleteColor.scaffold,
+                    activatedColor: Colors.transparent, 
+                    
                     filterHeaderColor: PalleteColor.scaffold,
                     filterHeaderIconColor: PalleteColor.scaffold,
-                    gridBorderColor: PalleteColor.scaffold,
-                    activatedColor: Colors.transparent,
-                    enableColumnBorderVertical: false,
-                    enableCellBorderVertical: false,
+                    
+                     enableGridBorderShadow: false,
+                   gridBorderColor: PalleteColor.scaffold,
+
                     columnTextStyle: const TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold),
                     rowCheckedColor: PalleteColor.red,
