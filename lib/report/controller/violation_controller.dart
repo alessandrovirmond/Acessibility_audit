@@ -103,37 +103,7 @@ class ViolationController implements IReportController {
         type: PlutoColumnType.text(),
         width: 180,
       ),
-      PlutoColumn(
-        title: "Como Corrigir",
-        field: "Como Corrigir",
-        type: PlutoColumnType.text(),
-        width: 250,
-      ),
-      PlutoColumn(
-        title: "Mais Informações",
-        field: "Mais Informações",
-        type: PlutoColumnType.text(),
-        width: 250,
-        renderer: (rendererContext) {
-          final String link = rendererContext.cell.value;
-          return InkWell(
-            onTap: () {
-              // Abre o link em um navegador
-              // Exemplo de lógica usando url_launcher
-              launchUrl(Uri.parse(link));
-            },
-            child: Text(
-              link,
-              style: const TextStyle(
-                color: Colors.blue,
-                decoration: TextDecoration.underline,
-              ),
-            ),
-          );
-        },
-      ),
-     
-      PlutoColumn(
+       PlutoColumn(
         title: "Elementos Afetados",
         field: "Elementos Afetados",
         type: PlutoColumnType.number(locale: "pt_Br"),
@@ -177,6 +147,37 @@ class ViolationController implements IReportController {
           );
         },
       ),
+      PlutoColumn(
+        title: "Como Corrigir",
+        field: "Como Corrigir",
+        type: PlutoColumnType.text(),
+        width: 250,
+      ),
+      PlutoColumn(
+        title: "Mais Informações",
+        field: "Mais Informações",
+        type: PlutoColumnType.text(),
+        width: 250,
+        renderer: (rendererContext) {
+          final String link = rendererContext.cell.value;
+          return InkWell(
+            onTap: () {
+              // Abre o link em um navegador
+              // Exemplo de lógica usando url_launcher
+              launchUrl(Uri.parse(link));
+            },
+            child: Text(
+              link,
+              style: const TextStyle(
+                color: Colors.blue,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          );
+        },
+      ),
+     
+     
     
     ];
   }
