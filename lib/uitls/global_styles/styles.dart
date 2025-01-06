@@ -153,8 +153,12 @@ class MyStyles {
       const TextStyle(fontWeight: FontWeight.bold, fontSize: 17);
   static TextStyle titleGridWhite = const TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 20,
+      fontSize:12,
       color: Color.fromRGBO(255, 255, 255, 1));
+  static TextStyle subtitleGridBlack = const TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize:12,
+      color: Colors.black);
   static TextStyle subtitleGrid =
       const TextStyle(fontWeight: FontWeight.w100, fontSize: 18);
   static TextStyle subtitleGridWhite = const TextStyle(

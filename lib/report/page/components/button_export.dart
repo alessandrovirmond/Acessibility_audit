@@ -34,7 +34,7 @@ class _ExportButtonState extends State<ExportButton> {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: isHovered ? Colors.grey[300] : Colors.white,
+            color: isHovered ? Colors.grey.shade400 : Colors.white,
             borderRadius: BorderRadius.circular(16),
             boxShadow: isHovered
                 ? [
@@ -46,7 +46,7 @@ class _ExportButtonState extends State<ExportButton> {
                   ]
                 : [],
           ),
-          child: const Icon(Icons.download, color: Colors.black),
+          child: Icon(Icons.download, color: isHovered ? Colors.white : Colors.black),
         ),
       ),
     );

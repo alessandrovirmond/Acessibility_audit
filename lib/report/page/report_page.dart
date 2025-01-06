@@ -113,7 +113,7 @@ class _ReportPageState extends State<ReportPage> {
                     },
                   )),
                   SizedBox(
-                    width: 10,
+                    width: 5,
                   ),
                   ButtonTopMenu(
                       tile: ButtonTopMenuModel(
@@ -124,7 +124,7 @@ class _ReportPageState extends State<ReportPage> {
                     },
                   )),
                   SizedBox(
-                    width: 10,
+                    width: 5,
                   ),
                   ValueListenableBuilder<bool>(
                       valueListenable: controller.isGraphActive,
@@ -160,7 +160,7 @@ class _ReportPageState extends State<ReportPage> {
                         );
                       }),
                        SizedBox(
-                    width: 10,
+                    width: 5,
                   ),
                   ExportButton(
                     exportCsv: () {
@@ -182,7 +182,7 @@ class _ReportPageState extends State<ReportPage> {
           ),
         ),
         SizedBox(
-          height: hg * 0.72,
+          height: hg * 0.65,
           width: wd * 0.97,
           child: PlutoGridExamplePage(
             collumn: controller.getCollumnsReport(setReport: setReport),
