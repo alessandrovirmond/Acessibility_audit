@@ -80,7 +80,7 @@ class _MenuState extends State<Menu> {
               ),
             );
           },
-          child: Text('Sobre', style: Config.enumHome == EnumHome.report ? MyStyles.titleGridBlack : MyStyles.titleGridWhite),
+          child: Text('Sobre', style: Config.enumHome == EnumHome.sobre ? MyStyles.subtitleGridBlack : MyStyles.titleGridWhite),
         ),
       ],
     );

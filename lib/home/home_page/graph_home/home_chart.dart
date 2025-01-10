@@ -139,6 +139,7 @@ class _HomeChartState extends State<HomeChart> {
                                 labelStyle: TextStyle(
                                   fontSize: isSmallScreen ? 10 : 12,
                                 ),
+                                
                                 labelIntersectAction:
                                     AxisLabelIntersectAction.trim,
                                 majorGridLines: const MajorGridLines(width: 0), // Remove linhas verticais

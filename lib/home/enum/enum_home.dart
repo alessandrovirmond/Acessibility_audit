@@ -1,1 +1,1 @@
-enum EnumHome { home, report }
+enum EnumHome { home, report, sobre }
