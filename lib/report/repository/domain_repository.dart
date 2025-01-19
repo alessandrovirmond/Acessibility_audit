@@ -1,28 +1,22 @@
 import 'dart:convert';
 import 'package:accessibility_audit/report/model/domain_model.dart';
+import 'package:accessibility_audit/services/http_dio/http_request.dart';
 import 'package:flutter/services.dart';
 
 
-class DomainRepository {
-  final String localPath;
+class  DomainRepository {
+  final HttpRequest _http =
+      HttpRequest();
+ 
 
-  DomainRepository({this.localPath = 'assets/relatorio_portais.json'});
+  Future<List<DomainModel>> get({Map<String, dynamic>? qsparam}) async {
+    Map<String, dynamic> res = await _http.doGet(qsparam: qsparam, path: "/domains"); 
 
-  // Método para carregar dados do JSON local
-  Future<List<DomainModel>> get() async {
-    try {
-      final String response = await rootBundle.loadString(localPath);
-      final Map<String, dynamic> data = json.decode(response);
+    print(res);
 
-
-      final Domains = data['data']
-          .map<DomainModel>((item) => DomainModel.fromJson(item))
-          .toList();
-
-      return Domains;
-    } catch (e) {
-      print("Erro ao carregar dados: $e");
-      rethrow;
-    }
+    return res["data"]
+        .map<DomainModel>(
+            (r) => DomainModel.fromJson(r))
+        .toList();
   }
 }

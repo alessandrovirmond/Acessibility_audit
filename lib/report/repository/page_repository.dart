@@ -1,41 +1,24 @@
 import 'dart:convert';
 import 'package:accessibility_audit/config.dart';
 import 'package:accessibility_audit/report/model/page_model.dart';
+import 'package:accessibility_audit/services/http_dio/http_request.dart';
 import 'package:flutter/services.dart';
 import 'package:accessibility_audit/report/controller/enum/enum_report.dart';
 
-class PageRepository {
-  final String localPath;
 
-  PageRepository({this.localPath = 'assets/relatorio_portais.json'});
+class  PageRepository {
+  final HttpRequest _http =
+      HttpRequest();
+ 
 
-  // Método para carregar dados do JSON local
-  Future<List<PageModel>> get() async {
+  Future<List<PageModel>> get({Map<String, dynamic>? qsparam}) async {
+    Map<String, dynamic> res = await _http.doGet(qsparam: qsparam, path: "/domain"); 
 
-    try {
-      final String response = await rootBundle.loadString(localPath);
-      final Map<String, dynamic> data = json.decode(response);
+    print(res);
 
-      // Filtrar os dados com base no município (Config.id)
-      final municipioData = data['data'].firstWhere(
-        (item) => item['municipio'] == Config.id,
-        orElse: () => null,
-      );
-
-      if (municipioData == null) {
-        print("Nenhum dado encontrado para o município: ${Config.id}");
-        return [];
-      }
-
-      // Mapear as páginas do município para PageModel
-      final pages = (municipioData['notas_paginas'] as List<dynamic>)
-          .map<PageModel>((item) => PageModel.fromJson(item))
-          .toList();
-
-      return pages;
-    } catch (e) {
-      print("Erro ao carregar dados: $e");
-      rethrow;
-    }
+    return res["data"]
+        .map<PageModel>(
+            (r) => PageModel.fromJson(r))
+        .toList();
   }
 }

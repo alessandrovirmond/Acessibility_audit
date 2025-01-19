@@ -1,5 +1,4 @@
 import 'package:accessibility_audit/home/home_page/graph_home/home_chart.dart';
-import 'package:accessibility_audit/home/home_page/graph_home/map.dart';
 import 'package:flutter/material.dart';
 
 class GraphHome extends StatefulWidget {
@@ -14,7 +13,7 @@ class _GraphHomeState extends State<GraphHome> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: MapPage()),
+       
         Expanded(child: HomeChart(updateWindows: false))
       ],
     );
