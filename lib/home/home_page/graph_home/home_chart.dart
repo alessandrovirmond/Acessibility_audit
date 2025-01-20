@@ -86,7 +86,7 @@ class _HomeChartState extends State<HomeChart> {
                                         Container(
                                           width: 10,
                                           height: 10,
-                                          color: PalleteColor.red,
+                                          color: Colors.blue.shade700,
                                         ),
                                         const SizedBox(width: 5),
                                         Text(
