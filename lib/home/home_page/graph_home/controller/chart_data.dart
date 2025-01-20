@@ -1,29 +1,22 @@
-
 class ChartData {
-  final String category;
-  final int value1;
-  final int value2;
+  final String name;
+  final double value;
 
-  ChartData(this.category, this.value1, this.value2); 
+  ChartData(
+    this.name,
+    this.value,
+  );
 }
 
-List<ChartData> createChartData(Map<String, List<int>>? dataMap) {
+List<ChartData> createChartData(Map<String, double>? dataMap) {
   List<ChartData> chartDataList = [];
 
   if (dataMap != null) {
-    dataMap.forEach((category, values) {
-      if (values.length >= 2) {
-      
-        int value1 = values[0];
-        int value2 = values[1];
-
-        ChartData chartData = ChartData(category, value1, value2);
-        chartDataList.add(chartData);
-        
-      }
+    dataMap.forEach((category, value) {
+      ChartData chartData = ChartData(category, value);
+      chartDataList.add(chartData);
     });
   }
 
   return chartDataList;
 }
-

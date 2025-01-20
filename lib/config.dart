@@ -7,9 +7,10 @@ class Config {
   static const double sizeLayout = 1200;
   static EnumHome enumHome = EnumHome.home; 
   static EnumReport enumReport = EnumReport.domain;
-  static String id = "RJ";
+  static String label = "RJ";
+  static int id = 0;
   static List<ButtonData> listButton = [
-  ButtonData(label: "RJ", enumReport: EnumReport.domain),
+  ButtonData(label: "RJ", id: 0 , enumReport: EnumReport.domain),
 ];
   static String backend = "http://localhost:3001/api";
 }

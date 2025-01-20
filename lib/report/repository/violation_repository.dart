@@ -1,55 +1,22 @@
 import 'dart:convert';
 import 'package:accessibility_audit/config.dart';
 import 'package:accessibility_audit/report/model/violation_model.dart';
+import 'package:accessibility_audit/services/http_dio/http_request.dart';
 import 'package:flutter/services.dart';
-
-class ViolationRepository {
-  final String localPath;
-
-  ViolationRepository({this.localPath = 'assets/relatorio_acessibilidade.json'});
-
-  // Método para buscar dados de violações com base no subdomínio fornecido
-  Future<List<ViolationModel>> get() async {
-    try {
-      final String response = await rootBundle.loadString(localPath);
-      final Map<String, dynamic> data = json.decode(response);
-
-      // Busca pelo subdomínio especificado
-      final subdomainData = data.entries
-          .firstWhere(
-            (entry) => entry.key == Config.id,
-            orElse: () => MapEntry('', {}),
-          )
-          ?.value;
-
-      if (subdomainData == null) {
-        print("Subdomínio não encontrado: ${Config.id}");
-        return [];
-      }
-final violations = data.entries
-    .expand((entry) {
-      final sub = entry.value; // Acessa o valor do MapEntry
-      if (sub is Map<String, dynamic>) {
-        // Verifica se o valor é um mapa
-        return (sub['subdominios'] as List<dynamic>?)
-            ?.expand((subdomain) => (subdomain['violacoes'] as List<dynamic>?) ?? [])
-            ?? [];
-      }
-      return [];
-    })
-    .toList();
+import 'package:accessibility_audit/report/controller/enum/enum_report.dart';
 
 
+class  ViolationRepository {
+  final HttpRequest _http =
+      HttpRequest();
+ 
 
-      // Converte os dados em uma lista de ViolationModel usando fromJson
-      final List<ViolationModel> violationList = violations.map((violation) {
-        return ViolationModel.fromJson(violation);
-      }).toList();
+  Future<List<ViolationModel>> get({Map<String, dynamic>? qsparam, required int id}) async {
+    Map<String, dynamic> res = await _http.doGet(qsparam: qsparam, path: "subdomains/$id/violations"); 
 
-      return violationList;
-    } catch (e) {
-      print("Erro ao carregar violações: $e");
-      rethrow;
-    }
+    return res["data"]
+        .map<ViolationModel>(
+            (r) => ViolationModel.fromJson(r))
+        .toList();
   }
 }

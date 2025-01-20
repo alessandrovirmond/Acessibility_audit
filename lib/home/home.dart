@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
 
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Expanded(
@@ -35,6 +36,7 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
+                  
                   child: Text(
                   "Observatório de Acessibilidade de Portais Municipais",
                     style: MyStyles.titleGrid,
@@ -44,7 +46,7 @@ class _HomeState extends State<Home> {
             ),
           ),
           Expanded(
-            flex: 7,
+            flex: 8,
             child: Container(
               decoration: BoxDecoration(
                 color: PalleteColor.blue,
@@ -56,10 +58,11 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: [
                   Container(
-                    height: 40,
+                    padding: EdgeInsets.only(top: 5),
+                    height: 44,
                     child: Menu(onUpdate: _reloadHome,)
                   ),
-                  Expanded(child: Config.enumHome == EnumHome.home ? HomePage() : ReportPage()),
+                  Expanded(child: Config.enumHome == EnumHome.home ? HomePage(onUpdate: _reloadHome) : ReportPage()),
                 ],
               ),
             ),

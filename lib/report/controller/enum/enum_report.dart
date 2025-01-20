@@ -1,4 +1,5 @@
 import 'package:accessibility_audit/report/controller/domain_contoller.dart';
+import 'package:accessibility_audit/report/controller/element_controller.dart';
 import 'package:accessibility_audit/report/controller/i_report_controller.dart';
 import 'package:accessibility_audit/report/controller/page_controllert.dart';
 import 'package:accessibility_audit/report/controller/violation_controller.dart';
@@ -21,7 +22,7 @@ extension EnumReportExtension on EnumReport {
         return ViolationController();
       
       case EnumReport.elements:
-       return DomainController();
+       return ElementController();
     }
   }
 

@@ -37,17 +37,30 @@ class _ReportPageState extends State<ReportPage> {
     setState(() {});
   }
 
-  void setReport(
-      {required EnumReport enumReport, required String id, bool add = true}) {
-    Config.enumReport = enumReport;
-    Config.id = id;
-    if (add) {
-      Config.listButton.add(ButtonData(label: id, enumReport: enumReport));
-    }
+void setReport({
+  required EnumReport enumReport,
+  required String label,
+  required int id,
+  bool add = true,
+}) {
+  // Tratamento para remover ocorrências específicas do label
+  final treatedLabel = label
+      .replaceAll('http://', '')
+      .replaceAll('https://', '')
+      .replaceAll('www.', '')
+      .replaceAll('.rj.gov.br', '');
 
-    controller = Config.enumReport.controller;
-    _reloadReport();
+  Config.enumReport = enumReport;
+  Config.id = id;
+
+  if (add) {
+    Config.listButton.add(ButtonData(label: treatedLabel, id: id, enumReport: enumReport));
   }
+
+  controller = Config.enumReport.controller;
+  _reloadReport();
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +84,7 @@ class _ReportPageState extends State<ReportPage> {
                     children: [
                       if (index > 0)
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
                           child: Icon(
                             Icons.keyboard_arrow_right,
                             size: 20,
@@ -85,7 +98,8 @@ class _ReportPageState extends State<ReportPage> {
                             setReport(
                               add: false,
                               enumReport: buttonData.enumReport,
-                              id: buttonData.label,
+                              label: buttonData.label,
+                              id: buttonData.id
                             );
                           } else {
                             Config.listButton.removeRange(
@@ -93,7 +107,8 @@ class _ReportPageState extends State<ReportPage> {
                             setReport(
                               add: false,
                               enumReport: buttonData.enumReport,
-                              id: buttonData.label,
+                              id: buttonData.id,
+                              label: buttonData.label
                             );
                           }
                         },

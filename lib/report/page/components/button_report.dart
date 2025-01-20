@@ -4,9 +4,7 @@ import 'package:accessibility_audit/report/page/components/button_data.dart';
 import 'package:accessibility_audit/uitls/global_styles/pallete_color.dart';
 import 'package:flutter/material.dart';
 
-
 class ButtonReport extends StatefulWidget {
-
   final ButtonData data;
   final Function() callback;
 
@@ -33,25 +31,34 @@ class _ButtonReportState extends State<ButtonReport> {
         onExit: (_) => setState(() => _isHovered = false),
         child: GestureDetector(
           onTap: widget.callback,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
+          child: IntrinsicWidth( // Permite ajustar o tamanho com base no conteúdo
+            child: Container(
+              constraints: const BoxConstraints(
+                maxWidth: 350, // Limita a largura máxima do botão
+                minHeight: 40, // Altura mínima
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: Colors.white, width: 3),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.grey,
                     offset: Offset(5, 5),
                   )
-                ]),
-            child: Center(
-              child: Text(
-                widget.data.label,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                ],
+              ),
+              child: Center(
+                child: Text(
+                  widget.data.label,
+                  maxLines: 1, // Garante que o texto tenha no máximo 1 linha
+                  overflow: TextOverflow.ellipsis, // Adiciona o "..." no final, se necessário
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),

@@ -25,7 +25,7 @@ class DomainController implements IReportController {
   @override
   final ValueNotifier<int?> isButtonPressed = ValueNotifier<int?>(null);
 
-  Future<List<PlutoRow>> getRows({required String id}) async {
+  Future<List<PlutoRow>> getRows({required int id}) async {
     isGraphActive.value = false;
 
     final List<DomainModel> response = await _repository.get();
@@ -35,7 +35,7 @@ class DomainController implements IReportController {
 
   List<PlutoColumn> getCollumnsReport(
       {required void setReport(
-          {required EnumReport enumReport, required String id})}) {
+          {required EnumReport enumReport, required int id, required String label})}) {
     return [
       PlutoColumn(
         title: "",
@@ -52,9 +52,11 @@ class DomainController implements IReportController {
         renderer: (rendererContext) {
           return IconButton(
             onPressed: () {
-              final String newId = rendererContext.cell.value;
+              final String value = rendererContext.cell.value;
+              final List<String> list = value.split("*&*");
+              final int? id = int.tryParse(list[0]); 
 
-              setReport(id: newId, enumReport: EnumReport.page);
+              setReport(id: id ?? 0, enumReport: EnumReport.page, label: list[1]);
 
               // Recarrega o ReportPage chamando o setState
               rendererContext.stateManager.notifyListeners();
@@ -66,27 +68,7 @@ class DomainController implements IReportController {
           );
         },
       ),
-      PlutoColumn(
-        title: "Município",
-        field: "Município",
-        type: PlutoColumnType.text(),
-        width: 180,
-        footerRenderer: (context) => PlutoAggregateColumnFooter(
-          rendererContext: context,
-          formatAsCurrency: false,
-          type: PlutoAggregateColumnType.count,
-          alignment: Alignment.center,
-          titleSpanBuilder: (text) {
-            return [
-              const TextSpan(
-                text: 'QNT:  ',
-                style: TextStyle(color: Colors.red),
-              ),
-              TextSpan(text: text.replaceAll('\$', "").replaceAll(",", ".")),
-            ];
-          },
-        ),
-      ),
+   
       PlutoColumn(
           title: "Domínio",
           field: "Domínio",
@@ -287,64 +269,7 @@ class DomainController implements IReportController {
             ],
           );
         },),
-     
-      PlutoColumn(
-        title: "",
-        field: "H",
-        width: 60,
-        enableColumnDrag: false,
-        enableDropToResize: false,
-        enableSetColumnsMenuItem: false,
-        enableSorting: false,
-        enableFilterMenuItem: false,
-        enableAutoEditing: false,
-        enableEditingMode: false,
-        frozen: PlutoColumnFrozen.end,
-        type: PlutoColumnType.text(),
-        renderer: (value) {
-          return IconButton(
-            onPressed: () {
-              // Verifica se o botão da linha já está pressionado
-              bool isAlreadySelected =
-                  value.stateManager.checkedRows.contains(value.row);
-
-              if (isAlreadySelected) {
-                // Despressiona o botão, definindo isButtonPressed como null
-                isButtonPressed.value = null;
-                selected = -1;
-              } else {
-                // Redefine todos os estados para falso
-                for (var element in value.stateManager.checkedRows) {
-                  value.stateManager.setRowChecked(element, false);
-                }
-
-                // Define o valor da linha pressionada em isButtonPressed
-                selected = value.cell.value;
-                isButtonPressed.value = value.cell.value;
-              }
-
-              // Define o estado de seleção para a linha atual
-              value.stateManager.setRowChecked(
-                value.row,
-                selected == value.cell.value,
-              );
-              value.stateManager.notifyListeners();
-              value.stateManager.onRowChecked!(
-                PlutoGridOnRowCheckedOneEvent(
-                  row: value.row,
-                  rowIdx: value.rowIdx,
-                  isChecked: selected == value.cell.value,
-                ),
-              );
-            },
-            icon: Icon(
-              value.stateManager.checkedRows.contains(value.row)
-                  ? Icons.check_rounded
-                  : Icons.history,
-            ),
-          );
-        },
-      ),
+    
     ];
   }
 }

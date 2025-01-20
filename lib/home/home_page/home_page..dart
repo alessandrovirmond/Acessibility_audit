@@ -2,7 +2,8 @@ import 'package:accessibility_audit/home/home_page/graph_home/graph_home.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+    final Function() onUpdate;
+  const HomePage({super.key,  required this.onUpdate});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -15,7 +16,7 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(child: GraphHome()),
+        Expanded(child: GraphHome(onUpdate: widget.onUpdate)),
         
       ],
     );

@@ -16,11 +16,12 @@ abstract class IReportController {
   ValueNotifier<bool> get isGraphActive;
   ValueNotifier<int?> get isButtonPressed;
 
-  Future<List<PlutoRow>> getRows({required String id});
+  Future<List<PlutoRow>> getRows({required int id});
 
 List<PlutoColumn> getCollumnsReport({
     required void setReport({
       required EnumReport enumReport,
-      required String id,
+      required int id,
+      required String label,
     }),
   });}

@@ -25,10 +25,10 @@ class ViolationController implements IReportController {
   final ValueNotifier<int?> isButtonPressed = ValueNotifier<int?>(null);
 
   /// Busca os dados e converte para linhas no grid
-  Future<List<PlutoRow>> getRows({required String id}) async {
+  Future<List<PlutoRow>> getRows({required int id}) async {
     isGraphActive.value = false;
 
-    final List<ViolationModel> response = await _repository.get();
+    final List<ViolationModel> response = await _repository.get(id: id);
 
     return response.map((r) => r.toRow()).toList();
   }
@@ -37,7 +37,8 @@ class ViolationController implements IReportController {
   List<PlutoColumn> getCollumnsReport({
     required void setReport({
       required EnumReport enumReport,
-      required String id,
+      required String label,
+      required int id
     }),
   }) {
     return [
@@ -56,9 +57,11 @@ class ViolationController implements IReportController {
         renderer: (rendererContext) {
           return IconButton(
             onPressed: () {
-              final String newId = rendererContext.cell.value;
+             final String value = rendererContext.cell.value;
+              final List<String> list = value.split("*&*");
+              final int? id = int.tryParse(list[0]); 
 
-              setReport(id: newId, enumReport: EnumReport.violation);
+              setReport(id: id ?? 0, enumReport: EnumReport.elements, label: list[1]);
 
               // Recarrega o ReportPage chamando o setState
               rendererContext.stateManager.notifyListeners();

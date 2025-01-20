@@ -10,9 +10,8 @@ class  DomainRepository {
  
 
   Future<List<DomainModel>> get({Map<String, dynamic>? qsparam}) async {
-    Map<String, dynamic> res = await _http.doGet(qsparam: qsparam, path: "/domains"); 
+    Map<String, dynamic> res = await _http.doGet(qsparam: qsparam, path: "domains"); 
 
-    print(res);
 
     return res["data"]
         .map<DomainModel>(
